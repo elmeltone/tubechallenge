@@ -25,9 +25,9 @@ $(function(){
 		var html = '<p>Results:</p><br>';
 		$.each(results.items, function(index,value){
 			html += '<p>' + value.snippet.title + '</p><br>' +
-			value.snippet.thumbnails.medium +
-			'</p><br>';
-			console.log(value.snippet.title, value.snippet.thumbnails.medium);	
+			'<img src=' + value.snippet.thumbnails.medium.url + ' class="thumbnail" alt="thumbnail"><br><br>';
+			console.log(value.snippet.title);
+			//console.log(value.snippet.thumbnails.medium);
 		});
 		$('#search-results').html(html);
 		};
