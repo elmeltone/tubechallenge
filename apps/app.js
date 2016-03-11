@@ -1,12 +1,10 @@
 $(function(){
 	
-	//$(function(){
-	  $('#search-term').submit(function(event){
-	    event.preventDefault();
-	    var searchTerm = $('#query').val();
-	    getRequest(searchTerm);
+	 $('#search-term').submit(function(event){
+	   event.preventDefault();
+	   var searchTerm = $('#query').val();
+	   getRequest(searchTerm);
 	  });
-	//});
 	
     function getRequest(searchTerm){
 		var params = {
@@ -16,18 +14,22 @@ $(function(){
 		};
 		url = 'https://www.googleapis.com/youtube/v3/search';
 		
-		$.getJSON('https://www.googleapis.com/youtube/v3/search?part=snippet&q=abba&key=AIzaSyDRR0OY18AImRUUhQi5kuHBMGJ7EO7C2_w', function(data){
+		$.getJSON(url, params, function(data){
 			showResults(data);
 		});
 	};
 	
 	function showResults(results) {
-		var html = '<p>Results:</p><br>';
+		var html = '<p>RESULTS</p><br>';
 		$.each(results.items, function(index,value){
-			html += '<p>' + value.snippet.title + '</p><br>' +
-			'<img src=' + value.snippet.thumbnails.medium.url + ' class="thumbnail" alt="thumbnail"><br><br>';
+			var defaultLink = 'https://www.youtube.com/watch?v=';
+			var vidPointer = value.id.videoId;
+			var vidLink = defaultLink.concat(vidPointer);
+			html += '<p>' + value.snippet.title + ':</p><br>' +
+			'<a href=' + vidLink + '><img src=' + value.snippet.thumbnails.medium.url +
+			' class="thumbnail" alt="thumbnail"></a><br><br>';
 			console.log(value.snippet.title);
-			//console.log(value.snippet.thumbnails.medium);
+			
 		});
 		$('#search-results').html(html);
 		};
